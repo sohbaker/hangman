@@ -54,4 +54,24 @@ RSpec.describe Word do
 
     expect(word.guessed_letters).to eq(['h', 'e', 'l', 'l', 'o'])
   end
+
+  it 'tells the user they have won when they\'ve guessed the full word' do
+    word = Word.new("hello")
+
+    word.add_guess('h')
+    word.add_guess('e')
+    word.add_guess('o')
+    word.add_guess('l')
+
+    expect(word.guessed_letters).to eq(['h', 'e', 'l', 'l', 'o'])
+  end
+
+  # it 'returns nothing if the guess is incorrect' do
+  #   word = Word.new('hello')
+  #
+  #   word.add_guess('k')
+  #
+  #   expect(word.guessed_letters).to eq(['_', '_', '_', '_', '_'])
+  # end
+  #
 end

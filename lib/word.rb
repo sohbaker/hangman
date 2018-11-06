@@ -18,8 +18,15 @@ class Word
         letters.push('_')
       end
     end
-    # @word.split('').map do |letter|
-    #   '_'
+
+    if letters == @word.split('')
+      puts "You have WON!"
+      puts "The answer is #{@word}!"
+    end
     letters
   end
+    # @word.split('').map do |letter|
+    #   '_'
+  # end
+
 end
