@@ -3,14 +3,13 @@ class Word
     @word = word
     # @word_split = word.split('')
     @user_guesses = []
-    @lives = 5
-    # @guesses_count = 0
-
+    # @lost_lives = []
+    @guesses_count = 0
   end
 
   def add_guess(letter)
     @user_guesses.push(letter)
-    # @guesses_count = +1
+    @guesses_count = +1
 
     # if @word_split.include?(letter) == false
     #   p @word_split
@@ -28,7 +27,7 @@ class Word
       @word.split('').each do |letter|
         if @user_guesses.include?(letter)
           reveal_correct_letters.push(letter)
-          @lives -= 1
+          @guesses_count -= 1
           # reveal_correct_letters -= @user_guesses - can't use this because it reduces the number of arguments expected
         else
           reveal_correct_letters.push('_')
