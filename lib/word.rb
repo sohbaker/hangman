@@ -1,59 +1,54 @@
 class Word
   def initialize(word)
     @word = word
-    # @word_split = word.split('')
+    @word_as_array = word.split('')
     @user_guesses = []
     @lives = 5
-    # @guesses_count = 0
 
+    hint = @word.size
+    print "Welcome to Hangman!\n"
+    print "The word is "
+    print "_ " * hint
+    print "\nMake a guess to start the game"
+    print "\n> "
   end
 
-  def add_guess(letter)
-    @user_guesses.push(letter)
-    # @guesses_count = +1
-
-    # if @word_split.include?(letter) == false
-    #   p @word_split
-    #   @lost_lives << 'x'
-    #   p @lost_lives
-    # end
+  def add_guess(guess)
+    if @word.include?(guess)
+      @user_guesses.push(guess)
+      right_guesses()
+    else
+      wrong_guesses()
+    end
   end
 
-  def guessed_letters
-    # ['_', '_', '_', '_', '_']
-    # wrong_letters = []
+  def right_guesses()
+    correct_guesses = []
 
-    reveal_correct_letters = []
-
-      @word.split('').each do |letter|
-        if @user_guesses.include?(letter)
-          reveal_correct_letters.push(letter)
-
-          # reveal_correct_letters -= @user_guesses - can't use this because it reduces the number of arguments expected
-        else
-          reveal_correct_letters.push('_')
-          # @lost_lives << 'x'
-          # wrong_letters.push()
-          # print "#{@user_guesses} Wrong letter. Guess again"
-          # p wrong_letters
-        end
+    @word_as_array.each do |letter|
+      if @user_guesses.include?(letter)
+        correct_guesses.push(letter)
+      else
+        correct_guesses.push('_')
       end
+    end
 
-      if reveal_correct_letters == @word.split('')
-        puts "You have WON!"
-        puts "The answer is #{@word}!"
-      end
-
-      if @lives == 0
-        puts 'YOU LOSE!'
-        puts "The answer was #{@word}!"
-      end
-
-    p reveal_correct_letters
-    reveal_correct_letters
-
+    if correct_guesses == @word_as_array
+      return "\nYou have WON!\nThe answer is #{@word}!\n"
+    end
+    return "#{correct_guesses.join(' ')} \nMake another guess\n> "
   end
-  #   @word.split('').map do |letter|
-  #     '_'
-  # end
+
+  def wrong_guesses()
+    if @lives > 0
+      @lives = @lives - 1
+      p @lives
+      return "\nWrong answer. You lose one life! :(\nMake another guess\n> "
+    end
+
+    if @lives == 0
+      return "The answer was #{@word}!"
+    end
+  end
+
 end
