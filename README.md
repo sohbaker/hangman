@@ -1,27 +1,23 @@
-# Skeleton
+## Hangman game
 
-A minimal setup for a ruby project with rspec
+We'd like you to build a game of Hangman you can play on the command line
 
-## Setup Instructions
+Core features
 
-1. Make sure you have ruby and bundler installed
-2. Install rspec with `bundle install`
-3. Replace the example `lib/hello.rb` and `spec/hello_spec.rb` files with your own
-4. Remove the `.git` folder and start a fresh one with `git init`
-5. Delete this README! Add some documentation for your project
+- User should be greeted by a message
+- User has a fixed number of guesses
+- Shows which letters have been guessed correctly
+- Shows if a user has won or lost
 
-## Run the Spec
+Stretch Goals
 
-```
-> bundle exec rspec
-```
+- Show a list of the wrong letters
+- Computer picks a random word
+- User can choose to play again
 
-## Try out your code
+Steps:
 
-If you'd like to mess around with code in `lib`, require it in the `bin/console` file and run it with
-
-```
-> bin/console
-```
-
-This will start an `irb` session with the code loaded
+- Start with a spike (see if you can hack bits of the game together on your own without tests)
+- Throw the code away
+- Start again with TDD in pairs
+- Don't start with the IO (i.e. `puts` `gets`) tests unless you're feeling ambitious!
