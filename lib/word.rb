@@ -40,7 +40,7 @@ class Word
   end
 
   def wrong_guesses()
-    if @lives > 0
+    if @lives >= 1
       @lives = @lives - 1
       p @lives
       return "\nWrong answer. You lose one life! :(\nMake another guess\n> "
@@ -50,5 +50,13 @@ class Word
       return "The answer was #{@word}!"
     end
   end
+
+  def is_not_guessed
+    @word_as_array.all? { |letter| @user_guesses.include?(letter) } == false
+  end
+
+def can_still_play
+  @lives >= 1
+end
 
 end
