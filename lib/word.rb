@@ -1,6 +1,26 @@
+require 'clean_words'
+
+# class RandomWord
+#   @word = R
+# end
+
+
+# class Random
+#   def randomword
+#     @words_lib = CleanWords::Random.new
+#   end
+# end
+
 class Word
+
+  # def randomword
+  #   @words_lib = CleanWords::Random.new
+  # end
+
   def initialize(word)
-    @word = word
+    word_gen = CleanWords::Random.new
+    @word = word_gen.fetch
+    # p @word
     @word_as_array = word.split('')
     @user_guesses = []
     @not_in_word = []
