@@ -2,11 +2,11 @@ require 'clean_words'
 
 class Word
 
-  def initialize(word)
+  def initialize(word_gen)
     word_gen = CleanWords::Random.new
+    # word_gen.stub(:message) { 'snack' }
     @word = word_gen.fetch
-    # p @word
-    @word_as_array = word.split('')
+    @word_as_array = @word.split('')
     @user_guesses = []
     @not_in_word = []
     @lives = 5
@@ -43,14 +43,13 @@ class Word
     if correct_guesses == @word_as_array
       return "\nYou have WON!\nThe answer is #{@word}!\n"
     end
-    return "Hint: #{correct_guesses.join(' ')}\nThese letters aren\'t in the word: #{@not_in_word.join(', ')}\nMake another guess\n> "
+    return "Hint: #{correct_guesses.join(' ')}\nThese letters are incorrect: #{@not_in_word.join(', ')}\nMake another guess\n> "
   end
 
   def wrong_guesses()
     if @not_in_word.count >= 1 && @lives >= 1
       @lives = @lives - 1
-      p @lives
-      return "\nWrong answer! These letters aren\'t in the word: #{@not_in_word.join(',')}.\nYou lose one life! :(\nMake another guess\n> "
+      return "\nWrong answer! These letters are incorrect: #{@not_in_word.join(',')}.\nYou lose one life! :(\nMake another guess\n> "
     end
 
     if @lives == 0

@@ -3,7 +3,7 @@ require 'word'
 class Hangman
   # ?? def greet_user?
   def play_game
-    word = Word.new('crazy')
+    word = Word.new('snack')
 
     while word.is_not_guessed && word.can_still_play do
       guess = gets.chomp

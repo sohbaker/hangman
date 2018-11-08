@@ -1,14 +1,30 @@
 require 'word'
 
-RSpec.describe Word do
+RSpec.configure do |config|
+  config.mock_with :rspec
+end
+
+describe Word do
+let(:word_gen)    { CleanWords::Random.new }
+
+  before do
+    allow_any_instance_of(CleanWords::Random).to receive(:fetch).and_return("snack")
+  end
+  # context "GET new word" do
+  #   # let(:response) { get "snack" }
+  #
+  #   it "returns the specified word rather than a random one" do
+  #     expect(initialize.word).to eq('snack')
+  #   end
+  # end
 
   it 'can handle incorrect guess followed by correct guess' do
-    word = Word.new('snack')
+    word_gen = Word.new('snack')
 
-    word.add_guess('g')
-    word.add_guess('a')
+    word_gen.add_guess('g')
+    word_gen.add_guess('a')
 
-    expect(word.right_guesses).to eq("Hint: _ _ a _ _\nThese letters aren\'t in the word: g\nMake another guess\n> ")
+    expect(word_gen.right_guesses).to eq("Hint: _ _ a _ _\nThese letters are incorrect: g\nMake another guess\n> ")
   end
 
   it 'tells the user when they\'ve run out of guesses' do
@@ -24,17 +40,17 @@ RSpec.describe Word do
   end
 
   it 'handles letters from different positions in the word' do
-    word = Word.new('crazy')
+    word_gen = Word.new(" ")
 
-    word.add_guess('c')
-    word.add_guess('r')
-    word.add_guess('y')
+    word_gen.add_guess('s')
+    word_gen.add_guess('n')
+    word_gen.add_guess('k')
 
-    expect(word.right_guesses).to eq("Hint: c r _ _ y\nThese letters aren't in the word: \nMake another guess\n> ")
+    expect(word_gen.right_guesses).to eq("Hint: s n _ _ k\nThese letters are incorrect: \nMake another guess\n> ")
   end
 
   it 'returns true if not all letters guessed' do
-    word = Word.new('crazy')
+    word = Word.new('snack')
 
     word.add_guess('w')
 
@@ -42,7 +58,7 @@ RSpec.describe Word do
   end
 
   it 'can tell whether or not the user still has lives' do
-    word = Word.new('crazy')
+    word = Word.new('snack')
 
     word.add_guess('p')
 
@@ -50,7 +66,7 @@ RSpec.describe Word do
   end
 
   it 'tells the user the game is over after 5 wrong guesses' do
-    word = Word.new('crazy')
+    word = Word.new('snack')
 
     word.add_guess('b')
     word.add_guess('d')
@@ -62,12 +78,38 @@ RSpec.describe Word do
   end
 
   it 'tells the user what letters aren\'t in the word' do
-    word = Word.new('crazy')
+    word = Word.new('snack')
 
     word.add_guess('b')
     word.add_guess('d')
     word.add_guess('e')
 
-    expect(word.wrong_guesses).to eq("\nWrong answer! These letters aren\'t in the word: b,d,e.\nYou lose one life! :(\nMake another guess\n> ")
+    expect(word.wrong_guesses).to eq("\nWrong answer! These letters are incorrect: b,d,e.\nYou lose one life! :(\nMake another guess\n> ")
   end
+
+  it 'overwrites random word generator, so that tests are still valid' do
+    word = Word.new('snack')
+
+    word.add_guess('s')
+    word.add_guess('n')
+    word.add_guess('a')
+    word.add_guess('c')
+    word.add_guess('k')
+
+    expect(word.right_guesses).to eq("\nYou have WON!\nThe answer is snack!\n")
+  end
+
+  # it "returns the specified word rather than a random one" do
+  #   # word_gen = Word.new()
+  #
+  #   word_gen.stub(:message) { 'snack' }
+  #   word_gen.message.should eq('snack')
+  #
+  #   # allow_any_instance_of(Word).to receive(word_gen).and_return('snack')
+  #   # CleanWords::Random.any_instance.stub(:foo).and_return('snack')
+  #
+  #   # word_gen = CleanWords::Random.new
+  #   # word_gen.foo.should eq('snack')
+  # end
+  # end
 end
