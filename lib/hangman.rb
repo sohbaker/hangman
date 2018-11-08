@@ -1,6 +1,7 @@
 require 'word'
 
 class Hangman
+  # ?? def greet_user?
   def play_game
     word = Word.new('crazy')
 

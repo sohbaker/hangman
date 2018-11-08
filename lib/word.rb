@@ -3,6 +3,7 @@ class Word
     @word = word
     @word_as_array = word.split('')
     @user_guesses = []
+    @not_in_word = []
     @lives = 5
 
     hint = @word.size
@@ -18,6 +19,7 @@ class Word
       @user_guesses.push(guess)
       right_guesses()
     else
+      @not_in_word.push(guess)
       wrong_guesses()
     end
   end
@@ -36,18 +38,18 @@ class Word
     if correct_guesses == @word_as_array
       return "\nYou have WON!\nThe answer is #{@word}!\n"
     end
-    return "#{correct_guesses.join(' ')} \nMake another guess\n> "
+    return "Hint: #{correct_guesses.join(' ')}\nThese letters aren\'t in the word: #{@not_in_word.join(', ')}\nMake another guess\n> "
   end
 
   def wrong_guesses()
-    if @lives >= 1
+    if @not_in_word.count >= 1 && @lives >= 1
       @lives = @lives - 1
       p @lives
-      return "\nWrong answer. You lose one life! :(\nMake another guess\n> "
+      return "\nWrong answer! These letters aren\'t in the word: #{@not_in_word.join(',')}.\nYou lose one life! :(\nMake another guess\n> "
     end
 
     if @lives == 0
-      return "The answer was #{@word}!"
+      return "YOU LOSE! The answer was #{@word}!"
     end
   end
 

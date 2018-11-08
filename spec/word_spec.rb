@@ -1,13 +1,6 @@
 require 'word'
 
 RSpec.describe Word do
-  it 'returns "wrong answer" if the guess is incorrect' do
-    word = Word.new('snack')
-
-    word.add_guess('g')
-
-    expect(word.wrong_guesses).to eq("\nWrong answer. You lose one life! :(\nMake another guess\n> ")
-  end
 
   it 'can handle incorrect guess followed by correct guess' do
     word = Word.new('snack')
@@ -15,7 +8,7 @@ RSpec.describe Word do
     word.add_guess('g')
     word.add_guess('a')
 
-    expect(word.right_guesses).to eq("_ _ a _ _ \nMake another guess\n> ")
+    expect(word.right_guesses).to eq("Hint: _ _ a _ _\nThese letters aren\'t in the word: g\nMake another guess\n> ")
   end
 
   it 'tells the user when they\'ve run out of guesses' do
@@ -27,7 +20,7 @@ RSpec.describe Word do
     word.add_guess('d')
     word.add_guess('e')
 
-    expect(word.wrong_guesses).to eq('The answer was snack!')
+    expect(word.wrong_guesses).to eq('YOU LOSE! The answer was snack!')
   end
 
   it 'handles letters from different positions in the word' do
@@ -37,7 +30,7 @@ RSpec.describe Word do
     word.add_guess('r')
     word.add_guess('y')
 
-    expect(word.right_guesses).to eq("c r _ _ y \nMake another guess\n> ")
+    expect(word.right_guesses).to eq("Hint: c r _ _ y\nThese letters aren't in the word: \nMake another guess\n> ")
   end
 
   it 'returns true if not all letters guessed' do
@@ -66,5 +59,15 @@ RSpec.describe Word do
     word.add_guess('g')
 
     expect(word.can_still_play).to eq(false)
+  end
+
+  it 'tells the user what letters aren\'t in the word' do
+    word = Word.new('crazy')
+
+    word.add_guess('b')
+    word.add_guess('d')
+    word.add_guess('e')
+
+    expect(word.wrong_guesses).to eq("\nWrong answer! These letters aren\'t in the word: b,d,e.\nYou lose one life! :(\nMake another guess\n> ")
   end
 end
