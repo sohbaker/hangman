@@ -1,21 +1,6 @@
 require 'clean_words'
 
-# class RandomWord
-#   @word = R
-# end
-
-
-# class Random
-#   def randomword
-#     @words_lib = CleanWords::Random.new
-#   end
-# end
-
 class Word
-
-  # def randomword
-  #   @words_lib = CleanWords::Random.new
-  # end
 
   def initialize(word)
     word_gen = CleanWords::Random.new
