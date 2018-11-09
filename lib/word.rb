@@ -11,7 +11,7 @@ class Word
     @lives = 5
 
     hint = @word.size
-    print "The word is #{"_ " * hint}\nMake a guess\n> "
+    print "\u{1F914} The word is #{"_ " * hint}\nMake a guess\n> "
   end
 
   def add_guess(guess)
@@ -36,7 +36,7 @@ class Word
     end
 
     if correct_guesses == @word_as_array
-      return "\nYou have WON!\nThe answer is #{@word}!\n"
+      return "\nYou have WON!\u{1F389}\u{1F3C6}\nThe answer is #{@word}!\n"
     end
     return "Hint: #{correct_guesses.join(' ')}\nThese letters are incorrect: #{@not_in_word.join(', ')}\nMake another guess\n> "
   end
@@ -44,7 +44,7 @@ class Word
   def wrong_guesses()
     if @not_in_word.count >= 1 && @lives > 1
       @lives = @lives - 1
-      return "\nWrong answer! These letters are incorrect: #{@not_in_word.join(',')}.\nYou lose one life! :( |Lives left: #{@lives}|\nMake another guess\n> "
+      return "\nWrong answer! These letters are incorrect: #{@not_in_word.join(',')}.\nYou lose one life! \u{1F614} |Lives left: #{@lives}|\nMake another guess\n> "
     end
 
     if @not_in_word.count >= 1 && @lives == 1
@@ -62,7 +62,7 @@ class Word
   end
 
   def no_lives_left
-    print "YOU LOSE! \nWould you like to play again? ('Yes' or 'No')\n> "
+    print "YOU LOSE! \u{26B0}\nWould you like to play again? ('Yes' or 'No')\n> "
     play_again = gets.chomp
 
     if play_again == "Yes"
