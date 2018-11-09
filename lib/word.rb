@@ -4,7 +4,6 @@ class Word
 
   def initialize(word_gen)
     word_gen = CleanWords::Random.new
-    # word_gen.stub(:message) { 'snack' }
     @word = word_gen.fetch
     @word_as_array = @word.split('')
     @user_guesses = []
@@ -12,11 +11,7 @@ class Word
     @lives = 5
 
     hint = @word.size
-    print "Welcome to Hangman!\n"
-    print "The word is "
-    print "_ " * hint
-    print "\nMake a guess to start the game"
-    print "\n> "
+    print "The word is #{"_ " * hint}\nMake a guess\n> "
   end
 
   def add_guess(guess)
@@ -47,13 +42,14 @@ class Word
   end
 
   def wrong_guesses()
-    if @not_in_word.count >= 1 && @lives >= 1
+    if @not_in_word.count >= 1 && @lives > 1
       @lives = @lives - 1
-      return "\nWrong answer! These letters are incorrect: #{@not_in_word.join(',')}.\nYou lose one life! :(\nMake another guess\n> "
+      return "\nWrong answer! These letters are incorrect: #{@not_in_word.join(',')}.\nYou lose one life! :( |Lives left: #{@lives}|\nMake another guess\n> "
     end
 
-    if @lives == 0
-      return "YOU LOSE! The answer was #{@word}!"
+    if @not_in_word.count >= 1 && @lives == 1
+      @lives = @lives - 1
+      no_lives_left()
     end
   end
 
@@ -61,8 +57,19 @@ class Word
     @word_as_array.all? { |letter| @user_guesses.include?(letter) } == false
   end
 
-def can_still_play
-  @lives >= 1
-end
+  def can_still_play
+    @lives >= 1
+  end
+
+  def no_lives_left
+    print "YOU LOSE! \nWould you like to play again? ('Yes' or 'No')\n> "
+    play_again = gets.chomp
+
+    if play_again == "Yes"
+      initialize('')
+    else
+      exit(0)
+    end
+  end
 
 end
