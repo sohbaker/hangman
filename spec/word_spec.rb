@@ -1,18 +1,17 @@
 require 'word'
 
-# RSpec.configure do |config|
-#   config.mock_with :rspec
-# end
-#
-# describe Word do
-# let(:word_gen)    { CleanWords::Random.new }
-#
-#   before do
-#     allow_any_instance_of(CleanWords::Random).to receive(:fetch).and_return("snack")
-#   end
-#
+RSpec.configure do |config|
+  config.mock_with :rspec
+end
 
-RSpec.describe Word do
+describe Word do
+let(:word_gen)    { CleanWords::Random.new }
+
+  before do
+    allow_any_instance_of(CleanWords::Random).to receive(:fetch).and_return("snack")
+  end
+
+# RSpec.describe Word do
   it 'can handle incorrect guess followed by correct guess' do
     word_gen = Word.new('snack')
 
@@ -20,18 +19,6 @@ RSpec.describe Word do
     word_gen.add_guess('a')
 
     expect(word_gen.right_guesses).to eq("Hint: _ _ a _ _\nThese letters are incorrect: g\nMake another guess\n> ")
-  end
-
-  it 'tells the user when they\'ve run out of guesses' do
-    word = Word.new('snack')
-
-    word.add_guess('g')
-    word.add_guess('l')
-    word.add_guess('b')
-    word.add_guess('d')
-    word.add_guess('e')
-
-    expect(word.wrong_guesses).to eq('YOU LOSE! The answer was snack!')
   end
 
   it 'handles letters from different positions in the word' do
@@ -79,7 +66,7 @@ RSpec.describe Word do
     word.add_guess('d')
     word.add_guess('e')
 
-    expect(word.wrong_guesses).to eq("\nWrong answer! These letters are incorrect: b,d,e.\nYou lose one life! :(\nMake another guess\n> ")
+    expect(word.wrong_guesses).to eq("\nWrong answer! \nThese letters are incorrect: b,d,e.\nYou lose one life! \u{1F614} |Lives left: 2|\nMake another guess\n> ")
   end
 
   it 'overwrites random word generator, so that tests are still valid' do
@@ -91,22 +78,10 @@ RSpec.describe Word do
     word.add_guess('c')
     word.add_guess('k')
 
-    expect(word.right_guesses).to eq("\nYou have WON!\nThe answer is snack!\n")
+    expect(word.right_guesses).to eq("\nYou have WON!\u{1F389}\u{1F3C6}\nThe answer is snack!\n")
   end
 
-  it "tells the user they have lost all their lives, but can guess again" do
-    # word = Word.new('snack')
-    #
-    # word.add_guess('b')
-    # word.add_guess('d')
-    # word.add_guess('e')
-    # word.add_guess('f')
-    # word.add_guess('g')
-
-    expect(word.play_again).to eq("You lost all your lives! Enter a new guess to play again")
-  end
-
-  it "allows user to play again and guess the same word" do
+  it "tells the user they have lost all their lives, but can play again" do
     word = Word.new('snack')
 
     word.add_guess('b')
@@ -114,8 +89,8 @@ RSpec.describe Word do
     word.add_guess('e')
     word.add_guess('f')
     word.add_guess('g')
-    word.add_guess('a')
 
-    expect(word.right_guesses).to eq("Hint: _ _ a _ _\nThese letters are incorrect: b, d, e, f, g\nMake another guess\n> ")
+    expect(word.play_again).to eq("YOU LOSE! \u{26B0}\u{1F622}\nThe word was snack.\nWould you like to play again? ('Yes' or 'No')\n> ")
   end
+
 end

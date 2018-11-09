@@ -35,21 +35,33 @@ class Word
       end
     end
 
-    if correct_guesses == @word_as_array
+    if @correct_guesses == @word_as_array
       return "\nYou have WON!\u{1F389}\u{1F3C6}\nThe answer is #{@word}!\n"
     end
+
     return "Hint: #{correct_guesses.join(' ')}\nThese letters are incorrect: #{@not_in_word.join(', ')}\nMake another guess\n> "
   end
 
   def wrong_guesses()
     if @not_in_word.count >= 1 && @lives > 1
       @lives = @lives - 1
-      return "\nWrong answer! These letters are incorrect: #{@not_in_word.join(',')}.\nYou lose one life! \u{1F614} |Lives left: #{@lives}|\nMake another guess\n> "
+      return "\nWrong answer! \nThese letters are incorrect: #{@not_in_word.join(',')}.\nYou lose one life! \u{1F614} |Lives left: #{@lives}|\nMake another guess\n> "
     end
 
     if @not_in_word.count >= 1 && @lives == 1
       @lives = @lives - 1
       no_lives_left()
+    end
+  end
+
+  def no_lives_left
+    print "YOU LOSE! \u{26B0}\nThe word was #{@word}.\nWould you like to play again? ('Yes' or 'No')\n> "
+    play_again = gets.chomp
+
+    if play_again == "Yes"
+      initialize('')
+    else
+      exit(0)
     end
   end
 
@@ -60,16 +72,4 @@ class Word
   def can_still_play
     @lives >= 1
   end
-
-  def no_lives_left
-    print "YOU LOSE! \u{26B0}\nWould you like to play again? ('Yes' or 'No')\n> "
-    play_again = gets.chomp
-
-    if play_again == "Yes"
-      initialize('')
-    else
-      exit(0)
-    end
-  end
-
 end
