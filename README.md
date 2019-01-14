@@ -11,12 +11,6 @@ Core features
 
 Stretch Goals
 
-<<<<<<< HEAD
 - [x] Show a list of the wrong letters
 - [x] Computer picks a random word
 - [x] User can choose to play again 
-=======
-- Show a list of the wrong letters - achieved
-- Computer picks a random word - achieved
-- User can choose to play again - achieved
->>>>>>> 54323982237afad8f8473c486f13c2c9e8630602
